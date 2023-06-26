@@ -22,7 +22,7 @@ RestoMagic ist eine Restaurant-Bestellsoftware, die entwickelt wurde, um den Bes
 2. Klonen Sie das Repository:
     git clone https://github.com/TockThomas/RestoMagic
 3. Navigieren Sie in das Projektverzeichnis:
-    cd RestoMagic
+    cd RestoMagic/src/RestoMagic
 4. Kompilieren Sie das Projekt:
     javac Main.java
 5. Führen Sie die Anwendung aus:
