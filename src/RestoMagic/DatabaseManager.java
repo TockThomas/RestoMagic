@@ -102,6 +102,26 @@ public class DatabaseManager {
         return tables;
     }
 
+    public List<MenuItem> getMenuItems(){
+        List<MenuItem> menuItems = new ArrayList<>();
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT MenueElementId, Name, Beschreibung, Preis, Kategorie FROM MenueElemente");
+
+            while(resultSet.next()){
+                int menuItemId = resultSet.getInt("MenueElementId");
+                String name = resultSet.getString("Name");
+                String description = resultSet.getString("Beschreibung");
+                double price = resultSet.getDouble("Preis");
+                String category = resultSet.getString("Kategorie");
+                menuItems.add(new MenuItem(menuItemId, name, description, price, category));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return menuItems;
+    }
+
     public void closeConnection() {
         try {
             if (connection != null) {
@@ -121,10 +141,6 @@ public class DatabaseManager {
     }
 
     private List<Order> getOrders(){
-        return null;
-    }
-
-    private List<MenuItem> getMenuItems(){
         return null;
     }
 
