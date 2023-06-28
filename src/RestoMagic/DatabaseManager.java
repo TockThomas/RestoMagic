@@ -66,7 +66,7 @@ public class DatabaseManager {
                 ");");
     }
 
-    public void executeUpdate(String query) {
+    private void executeUpdate(String query) {
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             preparedStatement.executeUpdate();
@@ -75,7 +75,7 @@ public class DatabaseManager {
         }
     }
 
-    public ResultSet executeQuery(String query) {
+    private ResultSet executeQuery(String query) {
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(query);
             return preparedStatement.executeQuery();
@@ -144,7 +144,97 @@ public class DatabaseManager {
         return null;
     }
 
-    private User getUser(String username, String password){
+    public User getUser(String pUsername, String pPassword){
+        String sql = "SELECT * FROM Benutzer WHERE Benutzername = ?";
+        try{
+            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setString(1, pUsername);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                String username = resultSet.getString("Benutzername");
+                String password = resultSet.getString("Passwort");
+                if(username.equals(pUsername) && password.equals(pPassword)){
+                    int userId = resultSet.getInt("BenutzerId");
+                    String role = resultSet.getString("Rolle");
+                    return new User(userId, username, password, role);
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
         return null;
+    }
+
+    public void addMenuItem(String pName, double pPrice){
+        String sql = "INSERT INTO MenueElemente (Name, Preis)" +
+                "VALUES (?, ?);";
+        try{
+            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setString(1, pName);
+            preparedStatement.setDouble(2, pPrice);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void editMenuItem(int pId, String pName, double pPrice){
+        String sql = "UPDATE MenueElemente " +
+                "SET Name = ?, Preis = ?" +
+                "WHERE MenueElementId = ?;";
+        try{
+            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setString(1, pName);
+            preparedStatement.setDouble(2, pPrice);
+            preparedStatement.setInt(3, pId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void removeMenuItem(MenuItem pMenuItem){
+        int id = pMenuItem.getMenuItemId();
+        String sql = "DELETE FROM MenueElemente " +
+                "WHERE MenueElementId = ?";
+        try{
+            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public List<OrderedItem> getOrderedItems(){
+        List<OrderedItem> orderedItem = new ArrayList<>();
+        try {
+            Statement statement = this.connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT BestellteElementId, MenueId, Anz FROM BestellteElemente");
+
+            while(resultSet.next()){
+                int orderedItemId = resultSet.getInt("BestellteElementId");
+                int menuItemId = resultSet.getInt("MenueId");
+                int quantity = resultSet.getInt("Anz");
+                orderedItem.add(new OrderedItem(orderedItemId, quantity, menuItemId));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return orderedItem;
+    }
+
+    public void addOrderedItem(int pId, int pQuantity, int pTableId){
+        String sql = "INSERT INTO BestellteElemente (MenueId, Anz)" +
+                "VALUES (?, ?);";
+        try{
+            PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+            preparedStatement.setInt(1, pId);
+            preparedStatement.setInt(2, pQuantity);
+            //preparedStatement.setInt(3, pTableId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
