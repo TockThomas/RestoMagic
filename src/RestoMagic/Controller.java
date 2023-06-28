@@ -1,6 +1,5 @@
 package RestoMagic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -66,7 +65,7 @@ public class Controller {
         return this.order.getOrderId();
     }
 
-    public double getUnitPrice(int pOrderedItemId){
-        return this.order.getUnitPrice(pOrderedItemId);
+    public int placeOrder(String pEmail){
+        return this.order.placeOrder(pEmail);
     }
 }

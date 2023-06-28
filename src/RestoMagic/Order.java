@@ -76,9 +76,6 @@ public class Order {
         return this.table;
     }
 
-    public double getUnitPrice(int pOrderedItemId){
-        return this.orderedItemList.get(pOrderedItemId).getUnitPrice();
-    }
 
     public List<OrderedItem> getOrderedItemList(){
         return this.orderedItemList;
@@ -86,5 +83,10 @@ public class Order {
 
     public void orderCancel(){
         this.initializeOrder();
+    }
+
+    public int placeOrder(String pEmail){
+        this.initializeOrder();
+        return 0;
     }
 }

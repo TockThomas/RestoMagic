@@ -28,9 +28,9 @@ public class GUI extends JFrame{
     private JLabel lbOrderOverviewOrderId;
     private JLabel lbOrderOverviewTotalPrice;
     private JTable tbOrderOverview;
-    private JButton abbrechenButton;
-    private JButton bestellungBestätigenButton;
-    private JButton ändernButton;
+    private JButton btOrderOverviewCancel;
+    private JButton btOrderOverviewOrder;
+    private JButton btOrderOverviewEdit;
     private JTextField tfOrderOverviewEmail;
 
     public GUI(){
@@ -53,6 +53,7 @@ public class GUI extends JFrame{
         this.btTableSelectionNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                controller.setOrderTable(cbTableSelection.getSelectedIndex());
                 displayMenuScreen();
             }
         });
@@ -81,13 +82,39 @@ public class GUI extends JFrame{
         this.btOrderNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayOrderOverviewScreen();
+                if(controller.getOrderedItems().isEmpty()){
+                    JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Bitte wählen Sie mindestens ein Menüelement aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    displayOrderOverviewScreen();
+                }
             }
         });
+
+        this.btOrderOverviewCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                orderCancel();
+            }
+        });
+
+        this.btOrderOverviewEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayMenuScreen();
+            }
+        });
+
+        this.btOrderOverviewOrder.addActionListener((new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                placeOrder();
+            }
+        }));
     }
 
     private void displayTableSelectionScreen(){
         String[] tableNames = this.controller.getTableNames();
+        this.cbTableSelection.removeAllItems();
         for(int i = 0; i < tableNames.length; i++){
             this.cbTableSelection.addItem(tableNames[i]);
         }
@@ -100,9 +127,9 @@ public class GUI extends JFrame{
     }
 
     private void displayMenuScreen(){
-        this.controller.setOrderTable(this.cbTableSelection.getSelectedIndex());
         this.setupTbMenu();
         this.setupTbOrder();
+        this.adjustPrice();
         this.cardLayout.show(pnlMain, "Order");
     }
 
@@ -117,7 +144,12 @@ public class GUI extends JFrame{
             data[i][1] = String.format("%.2f", item.getPrice()) + " €";
         }
 
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         for(int i = 0; i < columnNames.length; i++){
             model.addColumn(columnNames[i]);
         }
@@ -126,13 +158,19 @@ public class GUI extends JFrame{
             model.addRow(new Object[]{data[i][0], data[i][1]});
         }
         this.tbMenu.setModel(model);
+        this.tbMenu.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.tbMenu.getColumnModel().getColumn(1).setMaxWidth(60);
     }
 
     private void setupTbOrder(){
         String[] columnNames = {"Name", "Preis"};
         List<OrderedItem> orderedItemList = this.controller.getOrderedItems();
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         for(int i = 0; i < columnNames.length; i++){
             model.addColumn(columnNames[i]);
         }
@@ -151,6 +189,7 @@ public class GUI extends JFrame{
             }
         }
         this.tbOrder.setModel(model);
+        this.tbOrder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.tbOrder.getColumnModel().getColumn(1).setMaxWidth(60);
     }
 
@@ -184,17 +223,25 @@ public class GUI extends JFrame{
     }
 
     private void addMenuItem(){
-        int menuItemId = this.tbMenu.getSelectedRow();
-        this.controller.addMenuItem(menuItemId);
-        this.adjustPrice();
-        this.setupTbOrder();
+        if(this.tbMenu.getSelectionModel().isSelectionEmpty()){
+            JOptionPane.showMessageDialog(this, "Bitte wählen Sie mindestens ein Menüelement aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int menuItemId = this.tbMenu.getSelectedRow();
+            this.controller.addMenuItem(menuItemId);
+            this.adjustPrice();
+            this.setupTbOrder();
+        }
     }
 
     private void removeMenuItem(){
-        int orderedItemId = this.tbOrder.getSelectedRow();
-        this.controller.removeMenuItem(orderedItemId);
-        this.adjustPrice();
-        this.setupTbOrder();
+        if(this.tbOrder.getSelectionModel().isSelectionEmpty()){
+            JOptionPane.showMessageDialog(this, "Bitte wählen Sie mindestens ein Menüelement aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int orderedItemId = this.tbOrder.getSelectedRow();
+            this.controller.removeMenuItem(orderedItemId);
+            this.adjustPrice();
+            this.setupTbOrder();
+        }
     }
 
     private void adjustPrice(){
@@ -214,6 +261,28 @@ public class GUI extends JFrame{
         this.lbOrderOverviewTotalPrice.setText("Gesamt: " + String.format("%.2f", this.controller.getTotalPrice()) + " €");
         this.setupTbOrderOverview();
         this.cardLayout.show(pnlMain, "OrderOverview");
+    }
+
+    private void placeOrder(){
+        int orderId;
+        String title;
+        String message;
+        int messageType;
+        if(!this.tfOrderOverviewEmail.getText().contains("@")){
+            title = "Email eingeben";
+            message = "Bitte geben Sie Ihren Email richtig ein!";
+            messageType = JOptionPane.ERROR_MESSAGE;
+        } else {
+            orderId = this.controller.placeOrder(this.tfOrderOverviewEmail.getText());
+            title = "Bestellung Erfolgreich";
+            message = "Vielen Dank für Ihre Bestellung\n" +
+                    "Ihre Bestellnummer ist #" + orderId + ".\n" +
+                    "Ein Kellner wird in Kürze bei Ihnen sein.";
+            messageType = JOptionPane.INFORMATION_MESSAGE;
+            this.displayTableSelectionScreen();
+            this.tfOrderOverviewEmail.setText("");
+        }
+        JOptionPane.showMessageDialog(this, message, title, messageType);
     }
 
     private void displayAdminScreen(){

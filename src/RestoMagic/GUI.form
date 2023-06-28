@@ -201,7 +201,9 @@
                     <preferred-size width="200" height="280"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <enabled value="false"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="aaced" class="javax.swing.JTable" binding="tbMenu">
@@ -302,7 +304,9 @@
                     <preferred-size width="200" height="280"/>
                   </grid>
                 </constraints>
-                <properties/>
+                <properties>
+                  <enabled value="false"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="d16af" class="javax.swing.JTable" binding="tbOrder">
@@ -394,7 +398,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="77607" class="javax.swing.JButton" binding="abbrechenButton" default-binding="true">
+              <component id="77607" class="javax.swing.JButton" binding="btOrderOverviewCancel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -402,7 +406,7 @@
                   <text value="Abbrechen"/>
                 </properties>
               </component>
-              <component id="6bbde" class="javax.swing.JButton" binding="bestellungBestätigenButton" default-binding="true">
+              <component id="6bbde" class="javax.swing.JButton" binding="btOrderOverviewOrder">
                 <constraints>
                   <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -410,7 +414,7 @@
                   <text value="Bestellung bestätigen"/>
                 </properties>
               </component>
-              <component id="54437" class="javax.swing.JButton" binding="ändernButton" default-binding="true">
+              <component id="54437" class="javax.swing.JButton" binding="btOrderOverviewEdit">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -447,7 +451,10 @@
                 <children>
                   <component id="7a9af" class="javax.swing.JTable" binding="tbOrderOverview">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <enabled value="false"/>
+                      <rowSelectionAllowed value="false"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -477,8 +484,8 @@
               </hspacer>
               <component id="8e164" class="javax.swing.JTextField" binding="tfOrderOverviewEmail">
                 <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="220" height="-1"/>
                   </grid>
                 </constraints>
                 <properties/>
