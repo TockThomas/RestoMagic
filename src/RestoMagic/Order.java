@@ -30,7 +30,7 @@ public class Order {
         int menuItemId = pMenuItem.getMenuItemId();
         if(!this.orderedItemList.isEmpty()){
             for(int i = 0; i < this.orderedItemList.size(); i++){
-                if(this.orderedItemList.get(i).getId() == menuItemId){
+                if(this.orderedItemList.get(i).getMenuItemId() == menuItemId){
                     this.orderedItemList.get(i).addItem();
                     this.calculateTotal();
                     return;
@@ -85,7 +85,14 @@ public class Order {
         this.initializeOrder();
     }
 
-    public int placeOrder(String pEmail){
+    public int placeOrder(Controller pController, String pEmail){
+        for(int i = 0; i < this.orderedItemList.size(); i++){
+            OrderedItem orderedItem = this.orderedItemList.get(i);
+            int id = orderedItem.getMenuItemId();
+            int quantity = orderedItem.getQuantity();
+            int tableId = this.table.getTableId();
+            pController.addOrderedItemToDatabase(id, quantity, tableId);
+        }
         this.initializeOrder();
         return 0;
     }

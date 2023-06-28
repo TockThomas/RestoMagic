@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 public class GUI extends JFrame{
     private Controller controller;
     private CardLayout cardLayout = (CardLayout)this.pnlMain.getLayout();
+    private CardLayout cardLayoutAdmin = (CardLayout)this.pnlAdminScreen.getLayout();
     private JPanel pnlMain;
     private JPanel pnlTableSelection;
     private JButton btLogin;
@@ -32,6 +33,19 @@ public class GUI extends JFrame{
     private JButton btOrderOverviewOrder;
     private JButton btOrderOverviewEdit;
     private JTextField tfOrderOverviewEmail;
+    private JPanel pnlAdmin;
+    private JButton btAdminMenu;
+    private JButton btAdminLogOff;
+    private JButton btAdminOrder;
+    private JPanel pnlAdminScreen;
+    private JPanel pnlAdminHomepage;
+    private JPanel pnlAdminMenu;
+    private JPanel pnlAdminOrders;
+    private JTable tbAdminMenu;
+    private JButton btAdminMenuAdd;
+    private JTable tbAdminOrders;
+    private JButton btAdminMenuRemove;
+    private JButton btAdminMenuEdit;
 
     public GUI(){
         this.controller = new Controller();
@@ -40,6 +54,7 @@ public class GUI extends JFrame{
         this.displayTableSelectionScreen();
         this.pack();
         this.setSize(800, 600);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
@@ -110,6 +125,48 @@ public class GUI extends JFrame{
                 placeOrder();
             }
         }));
+
+        this.btAdminMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayAdminMenuScreen();
+            }
+        });
+
+        this.btAdminMenuAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adminAddMenuItem();
+            }
+        });
+
+        this.btAdminMenuEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adminEditMenuItem();
+            }
+        });
+
+        this.btAdminMenuRemove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adminRemoveMenuItem();
+            }
+        });
+
+        this.btAdminOrder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayAdminOrdersScreen();
+            }
+        });
+
+        this.btAdminLogOff.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logOff();
+            }
+        });
     }
 
     private void displayTableSelectionScreen(){
@@ -120,10 +177,6 @@ public class GUI extends JFrame{
         }
         this.cardLayout.show(pnlMain, "TableSelection");
         this.setContentPane(this.pnlMain);
-    }
-
-    private void displayLoginScreen(){
-
     }
 
     private void displayMenuScreen(){
@@ -257,7 +310,7 @@ public class GUI extends JFrame{
 
     private void displayOrderOverviewScreen(){
         this.lbOrderOverviewTable.setText(this.controller.getTableName());
-        this.lbOrderOverviewOrderId.setText("Bestellnummer: #" + this.controller.getOrderId());
+        this.lbOrderOverviewOrderId.setText("");//("Bestellnummer: #" + this.controller.getOrderId());
         this.lbOrderOverviewTotalPrice.setText("Gesamt: " + String.format("%.2f", this.controller.getTotalPrice()) + " €");
         this.setupTbOrderOverview();
         this.cardLayout.show(pnlMain, "OrderOverview");
@@ -285,7 +338,112 @@ public class GUI extends JFrame{
         JOptionPane.showMessageDialog(this, message, title, messageType);
     }
 
-    private void displayAdminScreen(){
+    private void displayLoginScreen(){
+        JDialog dlLogin = new LoginPopup(this, this.controller);
+    }
 
+    public void displayAdminScreen(){
+        this.cardLayoutAdmin.show(pnlAdminScreen, "Homepage");
+        this.cardLayout.show(pnlMain, "Admin");
+    }
+
+    private void displayAdminMenuScreen(){
+        this.setupTbAdminMenu();
+        this.cardLayoutAdmin.show(pnlAdminScreen, "Menu");
+    }
+
+    private void displayAdminOrdersScreen(){
+        this.setupTbAdminOrders();
+        this.cardLayoutAdmin.show(pnlAdminScreen, "Orders");
+    }
+
+    private void logOff(){
+        this.controller.logOff();
+        this.cardLayout.show(pnlMain, "TableSelection");
+    }
+
+    public void setupTbAdminMenu(){
+        String[] columnNames = {"Name", "Preis"};
+        List<MenuItem> menuItems = this.controller.getMenuItems();
+        Object[][] data = new Object[menuItems.size()][columnNames.length];
+
+        for(int i = 0; i < menuItems.size(); i++){
+            MenuItem item = menuItems.get(i);
+            data[i][0] = item.getName();
+            data[i][1] = String.format("%.2f", item.getPrice()) + " €";
+        }
+
+        DefaultTableModel model = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        for(int i = 0; i < columnNames.length; i++){
+            model.addColumn(columnNames[i]);
+        }
+
+        for(int i = 0; i < data.length; i++){
+            model.addRow(new Object[]{data[i][0], data[i][1]});
+        }
+        this.tbAdminMenu.setModel(model);
+        this.tbAdminMenu.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.tbAdminMenu.getColumnModel().getColumn(1).setMaxWidth(200);
+    }
+
+    private void adminAddMenuItem(){
+        JDialog dlAddMenuItem = new AddMenuItemPopup(this, this.controller);
+    }
+
+    private void adminEditMenuItem(){
+        if(this.tbAdminMenu.getSelectionModel().isSelectionEmpty()){
+            JOptionPane.showMessageDialog(this, "Bitte wählen Sie mindestens ein Menüelement aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int menuItemId = this.tbAdminMenu.getSelectedRow();
+            MenuItem menuItem = this.controller.getMenuItem(menuItemId);
+            JDialog dlEditMenuItem = new EditMenuItemPopup(this, this.controller, menuItem);
+        }
+    }
+
+    private void adminRemoveMenuItem(){
+        if(this.tbAdminMenu.getSelectionModel().isSelectionEmpty()){
+            JOptionPane.showMessageDialog(this, "Bitte wählen Sie mindestens ein Menüelement aus.", "Fehler", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int menuItemId = this.tbAdminMenu.getSelectedRow();
+            MenuItem menuItem = this.controller.getMenuItem(menuItemId);
+            JDialog dlRemoveMenuItem = new RemoveMenuItemPopup(this, this.controller, menuItem);
+        }
+    }
+
+    public void setupTbAdminOrders(){
+        String[] columnNames = {"Tisch", "Anzahl", "Artikelname", "Einzelpreis (€)", "Gesamtpreis (€)"};
+        List<OrderedItem> orderedItems = this.controller.getOrderedItemsForAdmin();
+        Object[][] data = new Object[orderedItems.size()][columnNames.length];
+
+        for(int i = 0; i < orderedItems.size(); i++){
+            OrderedItem item = orderedItems.get(i);
+            data[i][0] = this.controller.getTableName();
+            data[i][1] = item.getQuantity();
+            data[i][2] = item.getName();
+            data[i][3] = String.format("%.2f", item.getUnitPrice()) + " €";
+            data[i][4] = String.format("%.2f", item.getPrice()) + " €";
+        }
+
+        DefaultTableModel model = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        for(int i = 0; i < columnNames.length; i++){
+            model.addColumn(columnNames[i]);
+        }
+
+        for(int i = 0; i < data.length; i++){
+            model.addRow(new Object[]{data[i][0], data[i][1], data[i][2], data[i][3], data[i][4]});
+        }
+        this.tbAdminOrders.setModel(model);
+        this.tbAdminOrders.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.tbAdminOrders.getColumnModel().getColumn(1).setMaxWidth(200);
     }
 }

@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="RestoMagic.GUI">
   <grid id="27dc6" binding="pnlMain" layout-manager="CardLayout" hgap="0" vgap="0" show="cecd6">
     <constraints>
-      <xy x="20" y="20" width="592" height="748"/>
+      <xy x="20" y="20" width="1538" height="1809"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -379,8 +379,9 @@
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <enabled value="false"/>
                   <font size="18"/>
-                  <text value="Bestellnummer: "/>
+                  <text value=""/>
                 </properties>
               </component>
               <hspacer id="81e82">
@@ -554,6 +555,292 @@
               </grid>
             </constraints>
           </vspacer>
+        </children>
+      </grid>
+      <grid id="b8b4d" binding="pnlAdmin" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <card name="Admin"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="5eefa" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints border-constraint="North"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="2ecc9" class="javax.swing.JButton" binding="btAdminMenu">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Menüverwaltung"/>
+                </properties>
+              </component>
+              <component id="919ba" class="javax.swing.JButton" binding="btAdminLogOff">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Abmelden"/>
+                </properties>
+              </component>
+              <component id="f93a8" class="javax.swing.JButton" binding="btAdminOrder">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Bestellübersicht"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="fd59b" binding="pnlAdminScreen" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="274f1" binding="pnlAdminHomepage" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <card name="Homepage"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <hspacer id="6aa51">
+                    <constraints>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="1a48e">
+                    <constraints>
+                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                  <vspacer id="cc892">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="68f8b">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="80"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="61141">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="50"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <component id="4c77d" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font size="24"/>
+                      <text value="Admin Dashboard"/>
+                    </properties>
+                  </component>
+                  <component id="56f29" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font size="18"/>
+                      <text value="&lt;html&gt;&lt;center&gt;Willkommen im Admin-Bereich. Bitte wählen Sie eine Option&lt;br&gt; aus der Navigationsleiste oben, um fortzufahren.&lt;/center&gt;&lt;/html&gt;"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="417f8" binding="pnlAdminMenu" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <card name="Menu"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <vspacer id="63abc">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="50"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <component id="a24b4" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font size="24"/>
+                      <text value="Menüverwaltung"/>
+                    </properties>
+                  </component>
+                  <hspacer id="e40ee">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="30" height="-1"/>
+                      </grid>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="ff1bd">
+                    <constraints>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="30" height="-1"/>
+                      </grid>
+                    </constraints>
+                  </hspacer>
+                  <vspacer id="43c3e">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="58078">
+                    <constraints>
+                      <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="30"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="57883">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </vspacer>
+                  <grid id="bfd66" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <hspacer id="60e53">
+                        <constraints>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                      <component id="e3feb" class="javax.swing.JButton" binding="btAdminMenuAdd">
+                        <constraints>
+                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Hinzufügen"/>
+                        </properties>
+                      </component>
+                      <component id="e62a4" class="javax.swing.JButton" binding="btAdminMenuRemove">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Entfernen"/>
+                        </properties>
+                      </component>
+                      <component id="541f0" class="javax.swing.JButton" binding="btAdminMenuEdit">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Ändern"/>
+                        </properties>
+                      </component>
+                      <hspacer id="9f9a3">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                      </hspacer>
+                    </children>
+                  </grid>
+                  <scrollpane id="3d771">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="81baa" class="javax.swing.JTable" binding="tbAdminMenu">
+                        <constraints/>
+                        <properties/>
+                      </component>
+                    </children>
+                  </scrollpane>
+                </children>
+              </grid>
+              <grid id="a04a6" binding="pnlAdminOrders" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <card name="Orders"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <vspacer id="5c9c4">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="50"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <vspacer id="6b889">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="30"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <component id="c0e90" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font size="24"/>
+                      <text value="Bestellübersicht"/>
+                    </properties>
+                  </component>
+                  <vspacer id="87918">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="50"/>
+                      </grid>
+                    </constraints>
+                  </vspacer>
+                  <hspacer id="1019a">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="30" height="-1"/>
+                      </grid>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="852a9">
+                    <constraints>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="30" height="-1"/>
+                      </grid>
+                    </constraints>
+                  </hspacer>
+                  <scrollpane id="aedbb">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="4d73f" class="javax.swing.JTable" binding="tbAdminOrders">
+                        <constraints/>
+                        <properties/>
+                      </component>
+                    </children>
+                  </scrollpane>
+                </children>
+              </grid>
+            </children>
+          </grid>
         </children>
       </grid>
     </children>

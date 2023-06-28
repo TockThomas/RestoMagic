@@ -11,6 +11,10 @@ public class Table {
         this.is_available = true;
     }
 
+    public int getTableId(){
+        return this.tableId;
+    }
+
     public String getName() {
         return this.name;
     }

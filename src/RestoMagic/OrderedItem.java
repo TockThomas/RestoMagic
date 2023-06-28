@@ -2,6 +2,7 @@ package RestoMagic;
 
 public class OrderedItem {
     private int orderedItemId;
+    private int menuItemId;
     private String name;
     private MenuItem menuItem;
     private int quantity;
@@ -9,7 +10,7 @@ public class OrderedItem {
     private double unitPrice;
 
     public OrderedItem(MenuItem pMenuItem){
-        this.orderedItemId = pMenuItem.getMenuItemId();
+        this.menuItemId = pMenuItem.getMenuItemId();
         this.menuItem = pMenuItem;
         this.name = pMenuItem.getName() + " x 1";
         this.unitPrice = pMenuItem.getPrice();
@@ -17,8 +18,27 @@ public class OrderedItem {
         this.quantity = 1;
     }
 
-    public int getId(){
+    public OrderedItem(MenuItem pMenuItem, int pQuantity){
+        this.menuItemId = pMenuItem.getMenuItemId();
+        this.menuItem = pMenuItem;
+        this.name = pMenuItem.getName();
+        this.unitPrice = pMenuItem.getPrice();
+        this.price = this.unitPrice;
+        this.quantity = pQuantity;
+    }
+
+    public OrderedItem(int pId, int pQuantity, int pMenuItemId){
+        this.orderedItemId = pId;
+        this.quantity = pQuantity;
+        this.menuItemId = pMenuItemId;
+    }
+
+    public int getOrderedItemId(){
         return this.orderedItemId;
+    }
+
+    public int getMenuItemId(){
+        return this.menuItemId;
     }
 
     public String getName(){
